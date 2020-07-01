@@ -66,6 +66,6 @@ The end result of this example is as shown in \autoref{fig:example} as captures 
 ![Two groups passing each other in a narrow corridor.\label{fig:corridor}](figures/corridor.png)
 
 # Acknowledgments
-We acknoeledge the support from the Johns Hopkins Institute for Assured Autonomy.
+This project is a fork of [@socialforce]. We acknoeledge the support from the Johns Hopkins Institute for Assured Autonomy.
 
 # References
