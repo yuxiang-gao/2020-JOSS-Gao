@@ -34,7 +34,8 @@ To use `PySocialForce`, the user passes in the initial states, including positio
 ```python
 import numpy as np
 import pysocialforce as psf
-# initial states, each entry is the position, velocity and goal of a pedestrian in the form of (px, py, vx, vy, gx, gy)
+# initial states, each entry is the position, velocity and goal 
+# of a pedestrian in the form of (px, py, vx, vy, gx, gy)
 initial_state = np.array(
     [
         [0.0, 10, -0.5, -0.5, 0.0, 0.0],
@@ -42,12 +43,17 @@ initial_state = np.array(
         [0.0, 0.0, 0.0, 0.5, 1.0, 10.0],
     ]
 )
-# social groups informoation is represented as lists of indices of the state array
+# social groups informoation is represented as lists of indices 
+# of the state array
 groups = [[0, 1], [2]]
-# list of linear obstacles given in the form of (x_min, x_max, y_min, y_max)
+# list of linear obstacles given in the form of 
+# (x_min, x_max, y_min, y_max)
 obstacles = [[1, 2, 1, 1]]
 # initiate the simulator and pass in the states
-simulator = psf.Simulator(initial_state, groups=groups, obstacles=obstacles, config_file="my_config.toml")
+simulator = psf.Simulator(initial_state,
+                          groups=groups,
+                          obstacles=obstacles,
+                          config_file="my_config.toml")
 # run simulator for 50 steps
 simulator.step(50)
 ```
