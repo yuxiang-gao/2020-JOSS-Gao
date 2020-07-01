@@ -1,19 +1,19 @@
 ---
 title: 'PySocialForce: A Python Implementation of the Extended Social Force Model for Pedestrian Dynamics'
 tags:
-	- Python
-	- social force model
-	- social navigation
+    - Python
+    - social force model
+    - social navigation
 authors:
-	- name: Yuxiang Gao
-    orcid: 0000-0001-6183-2482
-	  affiliation: "1"
-  - name: Chien-Ming Huang
-    orcid: 0000-0002-6838-3701
-    affiliation: "1"
+    - name: Yuxiang Gao
+      orcid: 0000-0001-6183-2482
+      affiliation: "1"
+    - name: Chien-Ming Huang
+      orcid: 0000-0002-6838-3701
+       affiliation: "1"
 affiliations:
-  - name: Johns Hopkins University
-	index: 1
+    - name: Johns Hopkins University
+      index: 1
 date: 29 June 2020
 bibliography: paper.bib
 ---
