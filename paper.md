@@ -10,7 +10,7 @@ authors:
       affiliation: "1"
     - name: Chien-Ming Huang
       orcid: 0000-0002-6838-3701
-       affiliation: "1"
+      affiliation: "1"
 affiliations:
     - name: Johns Hopkins University
       index: 1
