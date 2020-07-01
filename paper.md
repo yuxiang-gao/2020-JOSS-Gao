@@ -31,7 +31,7 @@ In `PySocialForce`  we calculate six default forces. Three of them [@Moussaid:20
 
 To use `PySocialForce`, the user passes in the initial states, including position, velocity and goal of the pedestrians as its input, and optionally, the social groups information and obstacles. The custom parameter configurations can be passed in as a `toml` file. As shown in the example below:
 
-```Python
+```python
 import numpy as np
 import pysocialforce as psf
 # initial states, each entry is the position, velocity and goal of a pedestrian in the form of (px, py, vx, vy, gx, gy)
@@ -54,7 +54,7 @@ simulator.step(50)
 
 After the simulation finishes, one can easily generate an animation of the simulation with the provided `ScenVisualizer` context:
 
-```Python
+```python
 with psf.plot.SceneVisualizer(simulator, "output_image") as sv:
     sv.animate()
 ```
