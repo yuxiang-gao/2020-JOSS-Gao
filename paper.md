@@ -29,7 +29,7 @@ Socially-acceptable navigation in a crowded environment remains a largely unsolv
 
 In `PySocialForce`  we calculate six default forces. Three of them [@Moussaid:2009] are for individuals including the repulsive forces between pedestrians, the attractive forces betweeen each pedestrian and their goals, and the repulsive force from the obstacles. Another three of the forces [@Moussaid:2010] are for groups, including the coherence force that holds the group members together, the repulsove force that keep members from getting too close, and a force calculated from the gaze directions to keep the formations of the groups. Users can easily build their own forces by inheirting from the `Force` metaclass.
 
-To use `PySOcialForce`, the user passes in the initial states, including position, velocity and goal of the pedestrians as its input, and optionally, the social groups information and obstacles. The custom parameter configurations can be passed in as a `toml` file. As shown in the example below:
+To use `PySocialForce`, the user passes in the initial states, including position, velocity and goal of the pedestrians as its input, and optionally, the social groups information and obstacles. The custom parameter configurations can be passed in as a `toml` file. As shown in the example below:
 
 ```Python
 import numpy as np
