@@ -4,6 +4,7 @@ tags:
     - Python
     - social force model
     - social navigation
+    - crowd simulation
 authors:
     - name: Yuxiang Gao
       orcid: 0000-0001-6183-2482
@@ -12,24 +13,23 @@ authors:
       orcid: 0000-0002-6838-3701
       affiliation: "1"
 affiliations:
-    - name: Johns Hopkins University
+    - name: Department of Computer Science, Johns Hopkins University
       index: 1
 date: 29 June 2020
 bibliography: paper.bib
 ---
 
 # Summary
+Modeling pedestrian dynamics has a variety of applications, ranging from emergency simulation and urban planning to crowd simulation in games and movies. Pedestrian simulation also plays an important role in developing mobile robots that are capable of navigating in crowded human environments in a safe, efficient, and socially appropriate way. These robots promise to bring robotic assistance, such as emergency response, parcel delivery, and tour guidance, to our daily lives. While robot navigation has been widely studied, socially acceptable navigation in a crowded environment remains challenging due to the rich dynamics of social interactions between pedestrians and limited human data available for training and validating social navigation algorithms. Crowd simulation offers an alternate source of data for developing modern machine learning algorithms for social navigation. One popular model for pedestrian dynamics is the social force model proposed by @Helbing:1995, suggesting that pedestrian behaviors can be modeled as if they were subject to "social forces". @Moussaid:2010 extended this model by incorporating forces for social groups, which constitute most human crowds.
 
-Socially-acceptable navigation in a crowded environment remains a largely unsolved topic in mobile robots. To understand crowd motion, robots must understand the social interaction between the pedestrians, and dataset containing this kind of information is crucial for training and validating social navigation algorithms. However, manually collecting and annotating pedestrian interaction data can be costly and subjective. Therefore, modelling of pedestrians with social constraints and group information could be greatly helpful for researchers to understand social norms and how robots should act around humans. The social force model proposed by @Helbing:1995 suggested that pedestrian behaviors can be modelled as if they were subject to "social forces". @Moussaid:2010 extended this model by incorporating forces for social groups as the social groups play a predominant role in crowd dynamics.
-
-`PySocialForce` is a pure Python package for simulating crowd dynamics using extended social force model. It is designed to be used by social navigation researchers to generate crowd interaction data and to validate their models, and Python enables it to be easily extensible to add new custom "social forces" and to be used in reinforcement learning environments. We have used it with [OpenAI Gym](https://gym.openai.com/) in our own unpublished project to generate exmaples for a reinforcement learning algorithm for social navigation.
+`PySocialForce` is a pure Python package for simulating crowd dynamics based on the social force model. While it can be used for general crowd simulation, it is designed with the social navigation applications in mind. Our Python implementation makes it easily extensible, such as adding new custom "social forces" and interfacing with reinforcement learning environments (e.g., [OpenAI Gym](https://gym.openai.com/)).
 
 # The `PySocialForce` Package
-`PySocialForce` implements the social force model described in [@Moussaid:2009], and its extension with social groups described in [@Moussaid:2010]. The package started as a fork of `socialforce` [@socialforce], which implements the original social force model proposed in [@Helbing:1995]. We ended up completely rewrote the package to use the newer version of the social force model in [@Moussaid:2009; @Moussaid:2010] with its core functions accelerated with just-in-time compilation using [Numba](https://numba.pydata.org/). It also drew inspirations from the `pedsim_ros` [@pedsimros] package. `pedsim_ros` [@pedsimros] is a [ROS](https://www.ros.org/) package that implements the extended social force model. However, it is a GUI application and has dependency on both [ROS](https://www.ros.org/) and [QT](https://www.qt.io/). We have found it difficult to run `pedsim_ros`[@pedsimros] on servers without an X Window System.
+`PySocialForce` implements the social force model described in [@Moussaid:2009] and its extension with social groups described in [@Moussaid:2010]. The package started as a fork of `socialforce` [@socialforce], which implements the original social force model proposed in [@Helbing:1995]; however, we ended up rewriting the package to use the extended version of the social force model as described in [@Moussaid:2009; @Moussaid:2010] with its core functions accelerated with just-in-time compilation using [Numba](https://numba.pydata.org/). We also drew inspiration from the `pedsim_ros` [@pedsimros] package. `pedsim_ros` [@pedsimros] is a [ROS](https://www.ros.org/) package that implements the extended social force model. However, it is a GUI application and has dependency on both [ROS](https://www.ros.org/) and [QT](https://www.qt.io/); we have found it difficult to run `pedsim_ros`[@pedsimros] on servers without an X Window System.
 
-In `PySocialForce`  we calculate six default forces. Three of them [@Moussaid:2009] are for individuals including the repulsive forces between pedestrians, the attractive forces betweeen each pedestrian and their goals, and the repulsive force from the obstacles. Another three of the forces [@Moussaid:2010] are for groups, including the coherence force that holds the group members together, the repulsove force that keep members from getting too close, and a force calculated from the gaze directions to keep the formations of the groups. Users can easily build their own forces by inheirting from the `Force` metaclass.
+In our implementation, we calculate six default forces. Three of them [@Moussaid:2009] are for individuals including the repulsive forces between pedestrians, the attractive forces between each pedestrian and their goals, and the repulsive force from the obstacles. The other three forces [@Moussaid:2010] are for groups, including the coherence force that holds the group members together, the repulsive force that keep members from getting too close, and a force calculated from the gaze directions of pedestrians to maintain group formations. Users can easily create their own forces by inheriting from the `Force` metaclass.
 
-To use `PySocialForce`, the user passes in the initial states, including position, velocity and goal of the pedestrians as its input, and optionally, the social groups information and obstacles. The custom parameter configurations can be passed in as a `toml` file. As shown in the example below:
+To use `PySocialForce`, the user passes in the initial states, including position, velocity, and goal of the pedestrians, and optionally, the information of social groups and obstacles. The custom parameter configurations can be passed in as a `toml` file, as shown in the example below:
 
 ```python
 import numpy as np
@@ -58,20 +58,20 @@ simulator = psf.Simulator(initial_state,
 simulator.step(50)
 ```
 
-After the simulation finishes, one can easily generate an animation of the simulation with the provided `ScenVisualizer` context:
+After the simulation finishes, one can easily generate an animation of the simulation with the provided `SceneVisualizer` context:
 
 ```python
 with psf.plot.SceneVisualizer(simulator, "output_image") as sv:
     sv.animate()
 ```
 
-The end result of this example is as shown in \autoref{fig:example} as captures of different steps of the simulation. In this example, a group of two people enconter one pedestrian comming from another direction and steer clear of an obstacle in their path. Group memebers are interconnected with a purple line. \autoref{fig:corridor} shows another eample with a different setup. In this example, two groups passed each other in a narrow corridor.
+The result of this example is shown in \autoref{fig:example}. In this example, a group of two people encounters one pedestrian coming from the other direction, while avoiding an obstacle in their path. Group members are interconnected with a purple line. \autoref{fig:corridor} shows another example with a corridor setup. 
 
 ![Example simulation.\label{fig:example}](figures/example.png)
 
-![Two groups passing each other in a narrow corridor.\label{fig:corridor}](figures/corridor.png)
+![Two groups passing in a narrow corridor.\label{fig:corridor}](figures/corridor.png)
 
 # Acknowledgments
-This project is a fork of `socialforce` [@socialforce]. We acknoeledge the support from the Johns Hopkins Institute for Assured Autonomy.
+This project is supported by the Johns Hopkins University Institute for Assured Autonomy (IAA).
 
 # References
