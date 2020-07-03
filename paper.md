@@ -29,14 +29,26 @@ Crowd simulation offers an alternate source of data for developing modern machin
 # The `PySocialForce` Package
 `PySocialForce` implements the social force model described in [@Moussaid:2009] and its extension with social groups described in [@Moussaid:2010]. The package started as a fork of `socialforce` [@socialforce], which implements the original social force model proposed in [@Helbing:1995]; however, we ended up rewriting the package to use the extended version of the social force model as described in [@Moussaid:2009; @Moussaid:2010] with its core functions accelerated with just-in-time compilation using [Numba](https://numba.pydata.org/). We also drew inspiration from the `pedsim_ros` [@pedsimros] package, an [ROS](https://www.ros.org/) package that implements the extended social force model. However, as it is a GUI application and has dependency on both [ROS](https://www.ros.org/) and [QT](https://www.qt.io/), we have found it difficult to run `pedsim_ros` on servers without the X Window System.
 
-In our implementation, we calculate six default forces. Three of them [@Moussaid:2009] are for individuals: 1) the repulsive forces between pedestrians, 2) the attractive forces between each pedestrian and their goal(s), and 3) the repulsive forces from obstacles. The other three forces [@Moussaid:2010] are for groups: 4) the coherence force that holds group members together, 5) the repulsive force that keeps members from getting too close to each other, and 6) a force calculated from the gaze directions of pedestrians to maintain group formations. Users can easily create their own forces by inheriting the `Force` metaclass.
+In our implementation, we calculate six default forces. Three of them [@Moussaid:2009] are for individuals: 
+
+1. the repulsive forces between pedestrians;
+2. the attractive forces between each pedestrian and their goal(s);
+3. the repulsive forces from obstacles.
+
+The other three forces [@Moussaid:2010] are for groups: 
+
+4. the coherence force that holds group members together;
+5. the repulsive force that keeps members from getting too close to each other;
+6. a force calculated from the gaze directions of pedestrians to maintain group formations. 
+
+Users can easily create their own forces by inheriting the `Force` metaclass.
 
 To use `PySocialForce`, the user passes in the initial states---the positions, velocities, and goals of the pedestrians---and the optional information of social groups and obstacles. Input parameters can be passed in as a `toml` file, as shown in the example below:
 
 ```python
 import numpy as np
 import pysocialforce as psf
-# initial states; each entry is the position, velocity, and goal 
+# initial states; each entry is the position, velocity, and goal
 # of a pedestrian in the form of (px, py, vx, vy, gx, gy)
 initial_state = np.array(
     [
@@ -45,10 +57,10 @@ initial_state = np.array(
         [0.0, 0.0, 0.0, 0.5, 1.0, 10.0],
     ]
 )
-# social group information is represented as lists of indices 
+# social group information is represented as lists of indices
 # of the state array
 groups = [[0, 1], [2]]
-# list of linear obstacles given in the form of 
+# list of linear obstacles given in the form of
 # (x_min, x_max, y_min, y_max)
 obstacles = [[1, 2, 1, 1]]
 # initiate the simulator and pass in the states
