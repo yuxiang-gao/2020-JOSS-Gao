@@ -20,7 +20,7 @@ bibliography: paper.bib
 ---
 
 # Summary
-Modeling pedestrian dynamics has a variety of valuable applications, ranging from emergency simulation and urban planning to crowd simulation in video games and movies. Pedestrian simulation also plays an important role in developing mobile robots that are capable of navigating crowded human environments in a safe, efficient, and socially appropriate manner; these robots promise to bring practical robotic assistance &mdash such as emergency response, parcel delivery, or guided tours&mdashto our daily lives. While robot navigation has been widely studied, *socially acceptable* navigation in crowded environments remains a challenge due to the rich dynamics of social interactions between pedestrians and the limited human data available for training and validating social navigation algorithms.
+Modeling pedestrian dynamics has a variety of valuable applications, ranging from emergency simulation and urban planning to crowd simulation in video games and movies. Pedestrian simulation also plays an important role in developing mobile robots that are capable of navigating crowded human environments in a safe, efficient, and socially appropriate manner; these robots promise to bring practical robotic assistance---such as emergency response, parcel delivery, or guided tours---to our daily lives. While robot navigation has been widely studied, *socially acceptable* navigation in crowded environments remains a challenge due to the rich dynamics of social interactions between pedestrians and the limited human data available for training and validating social navigation algorithms.
 
 Crowd simulation offers an alternate source of data for developing modern machine learning algorithms for social navigation. One popular model for pedestrian dynamics is the social force model proposed by @Helbing:1995, suggesting that pedestrian behaviors can be modeled as if they were subject to "social forces." To simulate social groups, which constitute most human crowds, @Moussaid:2010 extended this model by introducing additional forces for social groups.
 
@@ -31,7 +31,7 @@ Crowd simulation offers an alternate source of data for developing modern machin
 
 In our implementation, we calculate six default forces. Three of them [@Moussaid:2009] are for individuals: 1) the repulsive forces between pedestrians, 2) the attractive forces between each pedestrian and their goal(s), and 3) the repulsive forces from obstacles. The other three forces [@Moussaid:2010] are for groups: 4) the coherence force that holds group members together, 5) the repulsive force that keeps members from getting too close to each other, and 6) a force calculated from the gaze directions of pedestrians to maintain group formations. Users can easily create their own forces by inheriting the `Force` metaclass.
 
-To use `PySocialForce`, the user passes in the initial states&mdashthe positions, velocities, and goals of the pedestrians&mdashand the optional information of social groups and obstacles. Input parameters can be passed in as a `toml` file, as shown in the example below:
+To use `PySocialForce`, the user passes in the initial states---the positions, velocities, and goals of the pedestrians---and the optional information of social groups and obstacles. Input parameters can be passed in as a `toml` file, as shown in the example below:
 
 ```python
 import numpy as np
