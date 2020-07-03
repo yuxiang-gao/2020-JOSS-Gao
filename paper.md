@@ -74,6 +74,6 @@ The result of this example is shown in \autoref{fig:example}. In this example, a
 ![Two groups passing each other in a narrow corridor.\label{fig:corridor}](figures/corridor.png)
 
 # Acknowledgments
-This project is supported by the Johns Hopkins University Institute for Assured Autonomy (IAA).
+This project is supported by the Johns Hopkins University Institute for Assured Autonomy.
 
 # References
